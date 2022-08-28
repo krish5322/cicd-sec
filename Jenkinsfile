@@ -37,7 +37,7 @@ pipeline {
               }
           }
       }
-      stage {
+      stage('Deploying to k8s') {
           steps {
               sh "sed -i 's#replace#/bill3213/numeric-app:${VERSION}#g' k8s_deployment_service.yaml"
               sh 'kubectl apply -f k8s_deployment_service.yaml'
