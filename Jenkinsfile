@@ -10,6 +10,7 @@ pipeline {
                 label 'kube-slave'
             }
             steps {
+              sh 'sudo apt install maven'
               sh "mvn clean package -DskipTests=true"
               archive 'target/*.jar'
             }
