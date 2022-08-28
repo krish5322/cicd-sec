@@ -52,6 +52,4 @@ public class NumericApplicationTests {
                  .andExpect(content().string("kubernetes DevSecOps"));
     }
 
-
-
 }
