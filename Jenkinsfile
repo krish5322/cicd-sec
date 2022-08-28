@@ -6,11 +6,7 @@ pipeline {
 
   stages {
       stage('Build Artifact') {
-            agent {
-                label 'kube-slave'
-            }
             steps {
-              sh 'apt install maven'
               sh "mvn clean package -DskipTests=true"
               archive 'target/*.jar'
             }
