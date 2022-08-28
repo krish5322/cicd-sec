@@ -33,7 +33,7 @@ pipeline {
                              docker rmi bill3213/numeric-app:${VERSION}
                              '''
                         }
-                    }
+
               }
           }
       }
@@ -46,4 +46,5 @@ pipeline {
           }
       }
   }
+
 }
