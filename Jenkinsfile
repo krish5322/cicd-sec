@@ -42,7 +42,7 @@ pipeline {
               sh "sed -i 's#replace#/bill3213/numeric-app:${VERSION}#g' k8s_deployment_service.yaml"
               sh 'kubectl apply -f k8s_deployment_service.yaml'
               sh 'kubectl -n default create deploy node-app --image siddharth67/node-service:v1'
-              sh 'kubectl -n default expose deploy --name node-app --port 5000'
+              sh 'kubectl -n default expose deploy node-app --name node-service --port 5000'
           }
       }
   }
