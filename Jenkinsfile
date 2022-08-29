@@ -40,7 +40,9 @@ pipeline {
                      sh 'mvn sonar:sonar'
                 }
                 timeout(time: 2, unit: 'MINUTES') {
-                  waitForQualityGate abortPipeline: true
+                    script {
+                        waitForQualityGate abortPipeline: true
+                    }
                 }
           }
       }
