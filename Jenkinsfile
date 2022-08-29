@@ -73,26 +73,26 @@ pipeline {
              sh 'docker run --rm -v $(pwd):/project openpolicyagent/conftest test --policy k8s-tests.rego k8s_deployment_service.yaml'
          }
       }
-      stage('Deploying to kubernetes') {
-           steps {
-              sh "sed -i 's#replace#/bill3213/numeric-app:${VERSION}#g' k8s_deployment_service.yaml"
-              sh 'kubectl apply -f k8s_deployment_service.yaml'
-              sh 'kubectl apply -f node-app-deployment.yaml'
-              sh 'kubectl apply -f node-service.yaml'
-          }
-      }
-      //stage('k8s deployment - DEV') {
-      //    steps {
-      //      parallel(
-      //        "Deployment": {
-      //           sh "bash k8s-script.sh"
-      //        },
-      //        "Rollout Status": {
-      //           sh "bash k8s-deployment-rollout-status.sh"
-      //        }
-      //      )
+      //stage('Deploying to kubernetes') {
+      //     steps {
+      //        sh "sed -i 's#replace#/bill3213/numeric-app:${VERSION}#g' k8s_deployment_service.yaml"
+      //        sh 'kubectl apply -f k8s_deployment_service.yaml'
+      //        sh 'kubectl apply -f node-app-deployment.yaml'
+      //        sh 'kubectl apply -f node-service.yaml'
       //    }
       //}
+      stage('k8s deployment - DEV') {
+          steps {
+            parallel(
+              "Deployment": {
+                 sh "bash k8s-script.sh"
+              },
+              "Rollout Status": {
+                 sh "bash k8s-deployment-rollout-status.sh"
+              }
+            )
+          }
+      }
   }
   post {
       always {

@@ -5,7 +5,7 @@ kubectl -n default get deployment ${deploymentName} > /dev/null
 
 if [[ $? -ne 0 ]]; then
      echo "deployment ${deploymentName} dosent exist"
-     kubectl -n default -f k8s_deployment_service
+     kubectl -n default -f k8s_deployment_service.yaml
 else
      echo "deployment ${deploymentName} exist"
      echo "image name - ${imageName}"
