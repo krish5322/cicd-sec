@@ -32,7 +32,7 @@ pipeline {
             }
           }
       }
-      stage('Sonarqube -SAST') {
+      stage('SonarQube -SAST') {
           steps {
              script {
                  withCredentials([string(credentialsId: 'sonar-cicd', variable: 'sonar_secret')]) {
