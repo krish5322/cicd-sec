@@ -36,7 +36,6 @@ pipeline {
       }
       stage('SonarQube -SAST') {
           steps {
-             script {
                 withSonarQubeEnv('sonar-server') {
                      sh 'mvn sonar:sonar'
                 }
@@ -45,7 +44,6 @@ pipeline {
                     waitForQualityGate abortPipeline: true
                   }
                 }
-             }
           }
       }
       stage('Docker Build and Push') {
