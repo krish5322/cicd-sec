@@ -35,15 +35,14 @@ pipeline {
       stage('SonarQube -SAST') {
           steps {
              script {
-               withCredentials([string(credentialsId: 'sonar-cicd', variable: 'sonar_secret')]) {
-                     sh 'mvn sonar:sonar -Dsonar.projectKey=cicd-sec -Dsonar.host.url=http://20.168.112.223:9000 -Dsonar.login=$sonar_secret'
-
-                 timeout(time: 1, unit: 'HOURS') {
+                withSonarQubeEnv(credentialsId: 'sonar-cicd') {
+                     sh 'mvn sonar:sonar'
+                }
+                timeout(time: 1, unit: 'HOURS') {
                      script {
                          waitForQualityGate abortPipeline: true
                      }
-                 }
-               }
+                }
              }
           }
       }
