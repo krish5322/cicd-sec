@@ -37,7 +37,7 @@ pipeline {
       stage('SonarQube -SAST') {
           steps {
                 withSonarQubeEnv('sonar-server2') {
-                     sh 'mvn sonar:sonar'
+                     sh "mvn sonar:sonar -Dsonar.projectKey=numeric"
                 }
                 timeout(time: 2, unit: 'MINUTES') {
                    script {
