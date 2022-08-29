@@ -1,4 +1,4 @@
-FROM adoptopenjdk/openjdk8:alpine-slim
+FROM adoptopenjdk/openjdk8:latest
 EXPOSE 8080
 ARG JAR_FILE=target/*.jar
 ADD ${JAR_FILE} app.jar
