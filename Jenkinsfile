@@ -36,7 +36,7 @@ pipeline {
           steps {
              script {
                  withSonarQubeEnv(credentialsId: 'sonar-cicd') {
-                     sh 'mvn sonar:sonar -Dsonar.projectKey=cicd-sec'
+                     sh 'mvn sonar:sonar'
                  }
                  timeout(time: 1, unit: 'HOURS') {
                      script {
