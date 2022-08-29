@@ -37,15 +37,17 @@ pipeline {
       stage('SonarQube -SAST') {
           steps {
                 withSonarQubeEnv('sonar-server2') {
-                     sh "mvn sonar:sonar \
-                        -Dsonar.projectKey=numeric \
-                        -Dsonar.host.url=http://20.168.112.223:9000"
+                     sh 'mvn sonar:sonar'
                 }
-                timeout(time: 2, unit: 'MINUTES') {
+          }
+      }
+      stage('Checking Quality Gate Status') {
+          steps {
+              timeout(time: 2, unit: 'MINUTES') {
                    script {
                       waitForQualityGate abortPipeline: true
                    }
-                }
+              }
           }
       }
       stage('Docker Build and Push') {
