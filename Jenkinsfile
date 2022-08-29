@@ -39,11 +39,6 @@ pipeline {
                 withSonarQubeEnv('sonar-server') {
                      sh 'mvn sonar:sonar'
                 }
-                timeout(time: 2, unit: 'MINUTES') {
-                  script {
-                    waitForQualityGate abortPipeline: true
-                  }
-                }
           }
       }
       stage('Docker Build and Push') {
