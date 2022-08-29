@@ -43,10 +43,11 @@ pipeline {
       }
       stage('checking qualitu gate') {
           steps {
-              timeout(time: 2, unit: 'MINUTES') {
-                  waitForQualityGate abortPipeline: true
-
-              }
+             withSonarQubeEnv(credentialsId: 'sonar-cicd') {
+                 timeout(time: 2, unit: 'MINUTES') {
+                    waitForQualityGate abortPipeline: true
+                 }
+             }
           }
       }
       stage('Docker Build and Push') {
