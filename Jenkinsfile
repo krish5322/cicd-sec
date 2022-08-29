@@ -37,7 +37,7 @@ pipeline {
           parallel(
             "Dependency Scan": {
                 sh "mvn dependency-check:check"
-            }
+            },
             "Trivy Scan": {
                 sh "docker run --rm -v $WORKSPACE:/root/.cache/ aquasec/trivy:0.31.3 --exit-code 1 --severity CRITICAL adoptopenjdk/openjdk8:alpine-slim"
             }
