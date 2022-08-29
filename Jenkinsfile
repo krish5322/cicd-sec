@@ -4,6 +4,12 @@ pipeline {
   }
   environment{
         VERSION = "${env.BUILD_ID}"
+        deploymentName = "devsecops"
+        containerName = "devsecops-container"
+        serviceName = "devsecops-svc"
+        imageName = "bill3213/numeric-app:${VERSION}"
+        applicationURL = ""
+        applicationURI = "/increment/99"
   }
 
   stages {
@@ -67,12 +73,24 @@ pipeline {
              sh 'docker run --rm -v $(pwd):/project openpolicyagent/conftest test --policy k8s-tests.rego k8s_deployment_service.yaml'
          }
       }
-      stage('Deploying to kubernetes') {
+      // stage('Deploying to kubernetes') {
+      //     steps {
+      //         sh "sed -i 's#replace#/bill3213/numeric-app:${VERSION}#g' k8s_deployment_service.yaml"
+      //        sh 'kubectl apply -f k8s_deployment_service.yaml'
+      //        sh 'kubectl apply -f node-app-deployment.yaml'
+      //        sh 'kubectl apply -f node-service.yaml'
+      //    }
+      //}
+      stage('k8s deployment - DEV') {
           steps {
-              sh "sed -i 's#replace#/bill3213/numeric-app:${VERSION}#g' k8s_deployment_service.yaml"
-              sh 'kubectl apply -f k8s_deployment_service.yaml'
-              sh 'kubectl apply -f node-app-deployment.yaml'
-              sh 'kubectl apply -f node-service.yaml'
+            parallel(
+              "Deployment": {
+                 sh 'k8s-script.sh'
+              },
+              "Rollout Status": {
+                 sh 'k8s-deployment-rollout-status.sh'
+              }
+            )
           }
       }
   }

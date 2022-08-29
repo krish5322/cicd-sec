@@ -1,0 +1,13 @@
+#!/bin/bash
+
+sed -i "s#replace#${imageName}#g" k8s_deployment_service.yaml
+kubectl -n default get deployment ${deploymentName} > /dev/null
+
+if [[ $? -ne 0 ]]; then
+     echo "deployment ${deploymentName} dosent exist"
+     kubectl -n default -f k8s_deployment_service
+else
+     echo "deployment ${deploymentName} exist"
+     echo "image name - ${imageName}"
+     kubectl -n default set image deploy ${deploymentName} ${containerName}=${imageName} --record=true
+fi
