@@ -39,7 +39,7 @@ pipeline {
                 sh "mvn dependency-check:check"
             },
             "Trivy Scan": {
-                sh "docker run --rm -v $WORKSPACE:/root/.cache/ aquasec/trivy:0.31.3 adoptopenjdk/openjdk8:alpine-slim"
+                sh "docker run --rm -v $WORKSPACE:/root/.cache/ aquasec/trivy:0.31.3  image adoptopenjdk/openjdk8:alpine-slim"
             }
           )
         }
