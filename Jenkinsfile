@@ -43,11 +43,13 @@ pipeline {
       }
       stage('Checking Quality Gate Status') {
           steps {
+            withSonarQubeEnv('sonar-server2') {
               timeout(time: 2, unit: 'MINUTES') {
                    script {
                       waitForQualityGate abortPipeline: true
                    }
               }
+            }
           }
       }
       stage('Docker Build and Push') {
