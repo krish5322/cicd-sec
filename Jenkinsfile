@@ -34,8 +34,16 @@ pipeline {
       }
       stage('vulnerability Scan - Docker') {
         steps {
-            sh "mvn dependency-check:check"
+          parallel(
+            "Dependency Scan": {
+                sh "mvn dependency-check:check"
+            }
+            "Trivy Scan":{
+                sh "docker run --rm -v $WORKSPACE:/root/.cache/ aquasec/trivy:0.31.3 --exit-code 1 --severity CRITICAL adoptopenjdk/openjdk8:alpine-slim"
+            }
+          )
         }
+
 
       }
       stage('Docker Build and Push') {
