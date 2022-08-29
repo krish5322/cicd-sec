@@ -86,6 +86,8 @@ pipeline {
             parallel(
               "Deployment": {
                  sh "bash k8s-script.sh"
+                 sh 'kubectl apply -f node-app-deployment.yaml'
+                 sh 'kubectl apply -f node-service.yaml'
               },
               "Rollout Status": {
                  sh "bash k8s-deployment-rollout-status.sh"
