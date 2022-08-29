@@ -85,10 +85,10 @@ pipeline {
           steps {
             parallel(
               "Deployment": {
-                 bash "k8s-script.sh"
+                 sh "k8s-script.sh"
               },
               "Rollout Status": {
-                 bash "k8s-deployment-rollout-status.sh"
+                 sh "k8s-deployment-rollout-status.sh"
               }
             )
           }
