@@ -32,6 +32,15 @@ pipeline {
             }
           }
       }
+      stage('Sonarqube -SAST') {
+          steps {
+             script {
+                 withCredentials([string(credentialsId: 'sonar-cicd', variable: 'sonar_secret')]) {
+                     mvn sonar:sonar -Dsonar.projectKey=cicd-sec -Dsonar.login=$sonar_secret
+                 }
+             }
+          }
+      }
       stage('Docker Build and Push') {
           steps {
               script{
