@@ -40,6 +40,9 @@ pipeline {
             },
             "Trivy Scan": {
                 sh "docker run --rm -v $WORKSPACE:/root/.cache/ aquasec/trivy:0.31.3  image adoptopenjdk/openjdk8:alpine-slim"
+            },
+            "OPA Conftest": {
+                sh "docker run --rm -v $(pwd):/project openpolicyagent/conftest test --policy opa-docker-security.rego Dockerfile"
             }
           )
         }
