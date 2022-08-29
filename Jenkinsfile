@@ -39,6 +39,11 @@ pipeline {
                 withSonarQubeEnv('sonar-server2') {
                      sh 'mvn sonar:sonar'
                 }
+                timeout(time: 2, unit: 'MINUTES') {
+                   script {
+                      waitForQualityGate abortPipeline: true
+                   }
+                }
           }
       }
       stage('checking quality gate status') {
