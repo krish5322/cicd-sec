@@ -75,7 +75,7 @@ pipeline {
                 sh 'docker run --rm -v $(pwd):/project openpolicyagent/conftest test --policy k8s-tests.rego k8s_deployment_service.yaml'
              },
              "Trivy Scan": {
-                sh "bash Trivy-k8s-scan.sh"
+                sh "bash trivy-k8s-scan.sh"
              }
            )
          }
