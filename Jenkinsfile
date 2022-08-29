@@ -62,6 +62,11 @@ pipeline {
               }
           }
       }
+      stage('vulnerability Scan - kubernetes') {
+         steps {
+             sh 'docker run --rm -v $(pwd):/project openpolicyagent/conftest test --policy k8s-tests.rego k8s_deployment_service.yaml'
+         }
+      }
       stage('Deploying to kubernetes') {
           steps {
               sh "sed -i 's#replace#/bill3213/numeric-app:${VERSION}#g' k8s_deployment_service.yaml"
