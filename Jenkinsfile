@@ -36,7 +36,7 @@ pipeline {
           steps {
              script {
                  withCredentials([string(credentialsId: 'sonar-cicd', variable: 'sonar_secret')]) {
-                     sh 'mvn sonar:sonar -Dsonar.projectKey=cicd-sec -Dsonar.login=$sonar_secret'
+                     sh 'mvn sonar:sonar -Dsonar.projectKey=cicd-sec -Dsonar.host.url=http://20.168.112.223:9000 -Dsonar.login=$sonar_secret'
                  }
              }
           }
