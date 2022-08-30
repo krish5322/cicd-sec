@@ -104,19 +104,10 @@ pipeline {
       }
       stage('Integration test - DEV') {
           steps {
-            script {
-              try {
-                sh "bash integration-test.sh"
-              } catch (e) {
-                  sh "kubectl -n default rollout undo deploy ${deploymentName}"
-                }
-                throw e
-              }
-            }
+              sh "bash integration-test.sh"
           }
       }
   }
-
   post {
       always {
           junit 'target/surefire-reports/*.xml'
@@ -125,7 +116,5 @@ pipeline {
           dependencyCheckPublisher pattern: 'target/dependency-check-report.xml'
       }
   }
-
-
-
 }
+
