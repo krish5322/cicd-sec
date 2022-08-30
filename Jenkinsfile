@@ -109,7 +109,7 @@ pipeline {
               try {
                 sh "bash integration-test.sh"
               } catch (e) {
-                  sh 'kubectl -n default rollout undo deploy ${deploymentName}'
+                  sh "kubectl -n default rollout undo deploy ${deploymentName}"
                 }
                 throw e
               }
@@ -126,5 +126,6 @@ pipeline {
           dependencyCheckPublisher pattern: 'target/dependency-check-report.xml'
       }
   }
+
 
 }
