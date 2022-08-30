@@ -125,4 +125,3 @@ pipeline {
           dependencyCheckPublisher pattern: 'target/dependency-check-report.xml'
       }
   }
-}
