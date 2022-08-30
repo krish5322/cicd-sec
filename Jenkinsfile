@@ -8,7 +8,7 @@ pipeline {
         containerName = "devsecops-container"
         serviceName = "devsecops-svc"
         imageName = "bill3213/numeric-app:${VERSION}"
-        applicationURL = ""
+        applicationURL = "http://20.40.49.65"
         applicationURI = "/increment/99"
   }
 
@@ -103,6 +103,19 @@ pipeline {
           }
       }
   }
+  stage('Integration test - DEV') {
+      steps {
+        script {
+          try {
+            sh "bash integration-test.sh"
+          } catch (e) {
+              sh "kubectl -n default rollout undo deploy ${deploymentName}"
+            }
+            throw e
+        }
+      }
+  }
+
   post {
       always {
           junit 'target/surefire-reports/*.xml'
