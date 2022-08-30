@@ -5,7 +5,7 @@ sleep 5s
 PORT=8080
 
 echo $PORT
-echo $applicationURL:$PORT/$applicationURI
+echo $applicationURL:$PORT$applicationURI
 
 if [[ ! -z "$PORT" ]];
 then
