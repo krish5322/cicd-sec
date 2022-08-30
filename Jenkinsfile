@@ -104,7 +104,15 @@ pipeline {
       }
       stage('Integration test - DEV') {
           steps {
-              sh "bash integration-test.sh"
+            script {
+              try {
+                sh "bash integration-test.sh"
+              } catch (e) {
+                  sh "kubectl -n default rollout undo deploy ${deploymentName}"
+                }
+                throw e
+              }
+            }
           }
       }
   }
