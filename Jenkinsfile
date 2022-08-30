@@ -105,7 +105,6 @@ pipeline {
   }
   stage('Integration test - DEV') {
       steps {
-        script {
           try {
             sh "bash integration-test.sh"
           } catch (e) {
@@ -113,7 +112,6 @@ pipeline {
             }
             throw e
           }
-        }
       }
   }
 
