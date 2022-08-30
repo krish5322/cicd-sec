@@ -102,7 +102,7 @@ pipeline {
             )
           }
       }
-      stage('Integration test - DEV') {
+      stage('Integration Test - DEV') {
           steps {
             sh "bash integration-test.sh"
           }
