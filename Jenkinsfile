@@ -82,7 +82,7 @@ pipeline {
       }
       stage('Deploying to kubernetes') {
            steps {
-              sh "sed -i 's#replace#/bill3213/numeric-app:${VERSION}#g' k8s_deployment_service.yaml"
+              sh "sed -i 's#replace#bill3213/numeric-app:${VERSION}#g' k8s_deployment_service.yaml"
               sh 'kubectl apply -f k8s_deployment_service.yaml'
               sh 'kubectl apply -f node-app-deployment.yaml'
               sh 'kubectl apply -f node-service.yaml'
