@@ -80,28 +80,28 @@ pipeline {
            )
          }
       }
-      stage('Deploying to kubernetes') {
-           steps {
-              sh "sed -i 's#replace#bill3213/numeric-app:${VERSION}#g' k8s_deployment_service.yaml"
-              sh 'kubectl apply -f k8s_deployment_service.yaml'
-              sh 'kubectl apply -f node-app-deployment.yaml'
-              sh 'kubectl apply -f node-service.yaml'
-          }
-      }
-      //stage('k8s deployment - DEV') {
-      //    steps {
-      //      parallel(
-      //        "Deployment": {
-      //           sh "bash k8s-script.sh"
-      //          sh 'kubectl apply -f node-app-deployment.yaml'
-      //           sh 'kubectl apply -f node-service.yaml'
-      //        },
-      //        "Rollout Status": {
-      //           sh "bash k8s-deployment-rollout-status.sh"
-      //        }
-      //      )
+      //stage('Deploying to kubernetes') {
+      //     steps {
+      //        sh "sed -i 's#replace#bill3213/numeric-app:${VERSION}#g' k8s_deployment_service.yaml"
+      //        sh 'kubectl apply -f k8s_deployment_service.yaml'
+      //        sh 'kubectl apply -f node-app-deployment.yaml'
+      //        sh 'kubectl apply -f node-service.yaml'
       //    }
       //}
+      stage('k8s deployment - DEV') {
+          steps {
+            parallel(
+              "Deployment": {
+                 sh "bash k8s-script.sh"
+                 sh 'kubectl apply -f node-app-deployment.yaml'
+                 sh 'kubectl apply -f node-service.yaml'
+              },
+              "Rollout Status": {
+                 sh "bash k8s-deployment-rollout-status.sh"
+              }
+            )
+          }
+      }
       stage('Integration Test - DEV') {
           steps {
             sh "bash integration-test.sh"
