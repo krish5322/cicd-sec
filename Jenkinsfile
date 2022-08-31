@@ -1,3 +1,5 @@
+@Library('slack') _
+
 pipeline {
   agent {
       label 'azure'
@@ -114,6 +116,8 @@ pipeline {
           jacoco execPattern: 'target/jacoco,exec'
           pitmutation mutationStatsFile: '**/target/pit-reports/**/mutations.xml'
           dependencyCheckPublisher pattern: 'target/dependency-check-report.xml'
+
+          sendNotifications currentBuild.result
       }
   }
 }
