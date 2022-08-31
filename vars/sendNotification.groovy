@@ -1,17 +1,17 @@
-def call(string buildstatus = 'STARTED') {
-  buildstatus = buildstatus ?: 'SUCCESS'
+def call(string buildStatus = 'STARTED') {
+  buildStatus = buildStatus ?: 'SUCCESS'
 
   def color
 
-  if (buildstatus == 'SUCCESS') {
+  if (buildStatus == 'SUCCESS') {
    color = '#47ec05'
-  } else if (buildstatus == 'UNSTABLE') {
+  } else if (buildStatus == 'UNSTABLE') {
    color = '#d5ee0d'
   } else {
    color = '#ec2805'
   }
 
-  def msg = "${buildstatus}: `${env.JOB_NAME}` #${env.BUILD_NUMBER}:\n${env.BUILD_URL}"
+  def msg = "${buildStatus}: `${env.JOB_NAME}` #${env.BUILD_NUMBER}:\n${env.BUILD_URL}"
 
   slackSend(color: color, message: msg)
 }
