@@ -3,7 +3,7 @@ def call(string buildstatus = 'STARTED') {
 
   def color
 
-  if {buildstatus == 'SUCCESS'} {
+  if (buildstatus == 'SUCCESS') {
    color = '#47ec05'
   } else if (buildstatus == 'UNSTABLE') {
    color = '#d5ee0d'
