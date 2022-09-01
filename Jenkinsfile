@@ -112,7 +112,7 @@ pipeline {
   }
   stage('Promote to PROD') {
     steps {
-      timeout(time:2unit: 'DAYS') {
+      timeout(time: 2, unit: 'DAYS') {
         input 'Do you Want to Approve the Deployment to Production Environment?'
       }
     }
