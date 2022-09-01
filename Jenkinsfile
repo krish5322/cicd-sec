@@ -10,7 +10,7 @@ pipeline {
         containerName = "devsecops-container"
         serviceName = "devsecops-svc"
         imageName = "bill3213/numeric-app:${VERSION}"
-        applicationURL = "http://20.207.75.123"
+        applicationURL = "http://devsec.20.204.236.196.nip.io"
         applicationURI = "/increment/99"
   }
 
