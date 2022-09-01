@@ -11,6 +11,7 @@ pipeline {
         serviceName = "devsecops-svc"
         imageName = "bill3213/numeric-app:${VERSION}"
         applicationURL = "http://devsec.20.204.236.196.nip.io"
+        applicationURLProd = "http://devsecprod.20.204.236.196.nip.io"
         applicationURI = "/increment/99"
   }
 
@@ -130,6 +131,11 @@ pipeline {
             }
           )
         }
+      }
+      stage('Integration Test - PROD') {
+          steps {
+            sh "bash integration-test-prod.sh"
+          }
       }
   }
   post {
