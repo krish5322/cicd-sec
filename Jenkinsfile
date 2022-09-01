@@ -123,7 +123,7 @@ pipeline {
         "Deployment": {
            sh 'kubectl -n prod apply -f node-app-deployment.yaml'
            sh 'kubectl -n prod apply -f node-service.yaml'
-           sh "sed -i "s#replace#${imageName}#g" k8s_prod_deployment_service.yaml"
+           sh "sed -i 's#replace#${imageName}#g' k8s_prod_deployment_service.yaml"
            sh "kubectl -n prod apply -f k8s_prod_deployment_service.yaml"
         },
         "Rollout Status": {
