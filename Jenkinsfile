@@ -109,28 +109,28 @@ pipeline {
             sh "bash integration-test.sh"
           }
       }
-  }
-  stage('Promote to PROD') {
-    steps {
-      timeout(time: 2, unit: 'DAYS') {
-        input 'Do you Want to Approve the Deployment to Production Environment?'
-      }
-    }
-  }
-  stage('K8s deployment - PROD') {
-    steps {
-      parallel(
-        "Deployment": {
-           sh 'kubectl -n prod apply -f node-app-deployment.yaml'
-           sh 'kubectl -n prod apply -f node-service.yaml'
-           sh "sed -i 's#replace#${imageName}#g' k8s_prod_deployment_service.yaml"
-           sh "kubectl -n prod apply -f k8s_prod_deployment_service.yaml"
-        },
-        "Rollout Status": {
-           sh "bash k8s-prod-deployment-rollout-status.sh"
+      stage('Promote to PROD') {
+        steps {
+          timeout(time: 2, unit: 'DAYS') {
+            input 'Do you Want to Approve the Deployment to Production Environment?'
+          }
         }
-      )
-    }
+      }
+      stage('K8s deployment - PROD') {
+        steps {
+          parallel(
+            "Deployment": {
+               sh 'kubectl -n prod apply -f node-app-deployment.yaml'
+               sh 'kubectl -n prod apply -f node-service.yaml'
+               sh "sed -i 's#replace#${imageName}#g' k8s_prod_deployment_service.yaml"
+               sh "kubectl -n prod apply -f k8s_prod_deployment_service.yaml"
+            },
+            "Rollout Status": {
+               sh "bash k8s-prod-deployment-rollout-status.sh"
+            }
+          )
+        }
+      }
   }
   post {
       always {
