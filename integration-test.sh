@@ -2,7 +2,7 @@
 
 sleep 5s
 
-PORT=8080
+PORT=80
 
 echo $PORT
 echo $applicationURL:$PORT$applicationURI
